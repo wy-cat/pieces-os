@@ -124,10 +124,8 @@ async function GrpcToPieces(inputModel,OriginModel,message, rules, stream, tempe
         // 在非GPT类型的模型中，temperature和top_p是无效的
         // 使用系统的根证书
         const credentials = grpc.credentials.createSsl();
+	grpc.WithUserAgent("dart-grpc/2.0.0")
         let client,request;
-	 // 创建元数据对象并设置 User-Agent
-        const metadata = new grpc.Metadata();
-        metadata.set('user-agent', 'dart-grpc/2.0.0'); // 设置自定义 User-Agent
         if (inputModel.includes('gpt')){
                 // 加载proto文件
                 const packageDefinition = new GRPCHandler(config.GPT_PROTO).packageDefinition;
@@ -162,7 +160,7 @@ async function GrpcToPieces(inputModel,OriginModel,message, rules, stream, tempe
                 const GRPCobjects = grpc.loadPackageDefinition(packageDefinition).runtime.aot.machine_learning.parents.vertex;
                 client = new GRPCobjects.VertexInferenceService(config.COMMON_GRPC, credentials);
         }
-        return await ConvertOpenai(client,request,inputModel,OriginModel,stream, metadata);
+        return await ConvertOpenai(client,request,inputModel,OriginModel,stream);
 }
 
 async function messagesProcess(messages) {

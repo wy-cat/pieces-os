@@ -128,7 +128,7 @@ async function GrpcToPieces(inputModel,OriginModel,message, rules, stream, tempe
         let client,request;
 	    // 创建元数据对象并设置 User-Agent
     const metadata = new grpc.Metadata();
-    metadata.set('user-agent', 'dart-grpc/2.0.0'); // 设置自定义 User-Agent
+    metadata.set('User-Agent', 'dart-grpc/2.0.0'); // 设置自定义 User-Agent
         if (inputModel.includes('gpt')){
                 // 加载proto文件
                 const packageDefinition = new GRPCHandler(config.GPT_PROTO).packageDefinition;
